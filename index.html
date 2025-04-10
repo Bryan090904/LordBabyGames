@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lord Baby Games</title>
+ <!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --menu-bg: #292929;
+            --text-light: #f5f5f5;
+            --text-gray: #aaa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background-color: var(--card-bg);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: var(--primary-color);
+            font-size: 28px;
+            font-weight: 700;
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        .dmca-link {
+            color: var(--text-gray);
+            font-size: 12px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .dmca-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1200x400') center/cover;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .banner-text h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        .banner-text p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: #ddd;
+            margin-bottom: 30px;
+        }
+        
+        .games-section {
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background-color: var(--primary-color);
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .game-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .game-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .game-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .game-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+        
+        .game-category {
+            color: var(--secondary-color);
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            background-color: var(--secondary-color);
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .download-btn:hover {
+            background-color: #36b7ad;
+            transform: translateY(-2px);
+        }
+        
+        /* Estilos para el menú de opciones de descarga */
+        .download-options {
+            display: none;
+            position: absolute;
+            bottom: 70px;
+            left: 15px;
+            right: 15px;
+            background-color: var(--menu-bg);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .download-option {
+            display: block;
+            padding: 4px 15px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #333;
+            transition: background-color 0.3s;
+        }
+        
+        .download-option:last-child {
+            border-bottom: none;
+        }
+        
+        .download-option:hover {
+            background-color: #333;
+        }
+        
+        .download-option small {
+            display: block;
+            color: var(--text-gray);
+            font-size: 12px;
+            margin-top: 3px;
+        }
+        
+        .download-note {
+            padding: 10px 15px;
+            font-size: 12px;
+            color: var(--text-gray);
+            background-color: #222;
+            text-align: center;
+        }
+        
+        .dmca-notice {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            font-size: 12px;
+            color: var(--text-gray);
+            display: none;
+            z-index: 1000;
+        }
+                        
+        .footer {
+            background-color: var(--card-bg);
+            padding: 30px 0;
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .copyright {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                justify-content: center;
+            }
+            
+            .banner {
+                height: 300px;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .dmca-notice {
+                max-width: 250px;
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-img {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo">Lord <span>Baby</span></a>
+                <a href="#" class="dmca-link" id="dmcaBtn">DMCA</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Banner -->
+    <section class="banner">
+        <div class="banner-text">
+            <h1>Lord Baby Games</h1>
+            <p>Tu portal de confianza para descargar los mejores juegos</p>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Featured Games -->
+        <section class="games-section">
+            <h2 class="section-title">Juegos Destacados</h2>
+            <div class="games-grid">
+                <!-- Game 1 - GTA V -->
+               <div class="game-card">
+                   <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgm5-wcL9FOXFFT0alGbDjEGMghJKw7oZHXD7oL8t7XvCoh7nKvb21Yd-yEURMTk_4iPjU-948yBs1Rp7-wBI45Pbe9xGeLmAvq3dQ9fpyxmlWRcH3FVNVeFtwq_v-s8MjA42iblEoooY9xqbxQFHLEEFdzOqYL48sRp5-7Hj8gu6aSfbRLDbkQfSqeybGU/s700/GTA%20V%20Lite%20Portada.jpg" 
+                       alt="Portada de GTA V Lite" 
+                       class="game-img">
+    
+                   <div class="game-info">
+                       <h3 class="game-title">GTA V Lite</h3>
+                       <p class="game-category">Acción / Mundo Abierto</p>
+        
+                       <button class="download-btn" 
+                           onclick="toggleDownloadOptions('GTAVLITE')">
+                           Descargar
+                       </button>
+
+                       <!-- Opciones de descarga -->
+                       <div class="download-options" id="GTAVLITE-options">
+                           <a href="https://www.mediafire.com/file/ov2ocju3axl2zez/GTLIVEVwww.randrogames.com.part1.rar/file" 
+                               class="download-option" 
+                               target="_blank"
+                               rel="noopener noreferrer">
+                               Parte 1 <small>(9.9 GB - MediaFire)</small>
+                           </a>
+                           <a href="https://www.mediafire.com/file/y82pqk0b9vyh9mi/GTLIVEVwww.randrogames.com.part2.rar/file" 
+                               class="download-option" 
+                               target="_blank"
+                               rel="noopener noreferrer">
+                               Parte 2 <small>(9.9 GB - MediaFire)</small>
+                           </a>
+                           <a href="https://www.mediafire.com/file/jiw7qfj4rvxkmn2/GTLIVEVwww.randrogames.com.part3.rar/file" 
+                               class="download-option" 
+                               target="_blank"
+                               rel="noopener noreferrer">
+                               Parte 3 <small>(9.9 GB - MediaFire)</small>
+                           </a>
+                           <a href="https://www.mediafire.com/file/fmz72q7sdnptks0/GTLIVEVwww.randrogames.com.part4.rar/file" 
+                               class="download-option" 
+                               target="_blank"
+                               rel="noopener noreferrer">
+                               Parte 4 <small>(9.9 GB - MediaFire)</small>
+                           </a>
+                           <a href="https://www.mediafire.com/file/33qoedi5vwbohss/GTLIVEVwww.randrogames.com.part5.rar/file" 
+                               class="download-option" 
+                               target="_blank"
+                               rel="noopener noreferrer">
+                               Parte 5 <small>(4.3 GB - MediaFire)</small>
+                           </a>
+                           <div class="download-note">
+                               * Necesitas las 5 partes para instalar
+                           </div>
+                       </div>
+                   </div>
+               </div>
+                
+                <!-- Game 2 - Left 4 Dead 2 -->
+                <div class="game-card">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi93pHlo3VVuNiObq3PihNbSB4R99goDrsDpMSS64ObXC6JaZli6hHEx1Xi0eWOavBGHZN3SqckXVzaZVE3bQsxOIJQV8NxveZxVj_GYzsYoSoJHH2BDUZiLQlHFHB4OSDSReWRhBEs-AAVejvuOoXEf6vjqHNu_3mriSYYk2eIiTZoctLpBbRZw1kSqsI1/s700/Left%204%20Dead%201%20Portada.jpg" 
+                         alt="Left 4 Dead 2" 
+                         class="game-img">
+                    <div class="game-info">
+                        <h3 class="game-title">Left 4 Dead 2</h3>
+                        <p class="game-category">FPS / Survival Horror / Cooperativo</p>
+                        <button class="download-btn" onclick="toggleDownloadOptions('l4d2')">Descargar</button>
+                        
+                        <!-- Opciones de descarga -->
+                        <div class="download-options" id="l4d2-options">
+                            <a href="https://www.mediafire.com/file/z6h5hg7jiwo75ij/Left+4+Dead+2.part1.rar/file" 
+                               class="download-option" 
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                Parte 1 <small>(6.0 GB - MediaFire)</small>
+                            </a>
+                            <a href="https://www.mediafire.com/file/6qjj171w9wsr2az/Left+4+Dead+2.part2.rar/file" 
+                               class="download-option" 
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                Parte 2 <small>(4.03 GB - MediaFire)</small>
+                            </a>
+                            <div class="download-note">
+                                * Necesitas ambas partes para instalar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 3 - Naruto -->
+                <div class="game-card">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_1Fk-PW4Z_aOqvPptqL2piuedaXw9lOFmiXaV7SlnB8G4_4j6-s1VM-DgACGi2VuMt4qhrEt4J3gB3PUSJgKnhem64FgIF9SuuNt46CRcfslo4Qls1x0YHKjNp1cYiUXV-X6RX2D6Ysd_iVg80a25zqoWXtrrSnZxadbmINj_gOZCQdvkF0gY7sctgqlq/s700/Naruto%20Shipudden%20Ultimate%20Ninja%20Storn%20Revolution%20Portada.jpg" 
+                         alt="Naruto Ultimate Ninja Storm Revolution" 
+                         class="game-img">
+                    <div class="game-info">
+                        <h3 class="game-title">Naruto Ultimate Ninja Storm Revolution</h3>
+                        <p class="game-category">Lucha / Arena Brawler / Anime</p>
+                        <a href="https://www.mediafire.com/file/an4910pcdp5ewmv/Naruto.Shippuden.Ultimate.Ninja.Storm.Revolution.rar/file" 
+                           class="download-btn" 
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            Descargar
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Game 4 - Schedule 1 -->
+                <div class="game-card">
+                    <img src="https://digiseller.mycdn.ink/imgwebp.ashx?idc=1544" 
+                         alt="Schedule 1" 
+                         class="game-img">
+                    <div class="game-info">
+                        <h3 class="game-title">Schedule 1</h3>
+                        <p class="game-category">Drug Trade Simulator / Crime / Strategy</p>
+                        <a href="https://www.mediafire.com/file/m31xetv1pmh2vcg/schdl1.rar/file" 
+                           class="download-btn" 
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            Descargar
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Game 5 - Poppy Playtime: Capítulo 2 -->
+                <div class="game-card">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgKyUPhlC1KaD2TR-FYrOjd3E_PCxGv8AeisSo8JMNh3fCncpYB6c1ygfZoGazHYAtVhjsG0L5tYV4oi_4gWk7Vrt8Oa1CbuLSe9-ojRSoxNZ0npcYqH2cQvS5j7dRukRQgQy6IBSd0X87gZWtoWhkmwWVoZtAxvBajnkISXNyHErMUa7lWkqz-dzIbgDfp/s700/Poppy%20Playtime%202%20Portada.jpg" 
+                         alt="Poppy Playtime: Capítulo 2" 
+                         class="game-img">
+                    <div class="game-info">
+                        <h3 class="game-title">Poppy Playtime: Capítulo 2</h3>
+                        <p class="game-category">Terror / Supervivencia / Aventura / Puzles</p>
+                        <a href="https://www.mediafire.com/file/fbtzwajjlanb4yx/Poppy+Playtime+-+Chapter+2.rar/file"
+                            class="download-btn"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                             Descargar
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Game 6 - Poppy Playtime: Capítulo 3 (CORREGIDO) -->
+                <div class="game-card">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgecVSP7XN_vXrskGOSWi_JSZPy0l-iOIoQJew4-ltoG7KRoaWPrMEKCffj0QU2mU6WF_f15O4ITWAf1gELUeTUOukK-daFFN6SUHz3NCJ52-0l6k0_VeAmDhnTAwzrLcI3LVeCZZpqHuVDys0H8floPT4q7sgUUpjauYbVPdAbQIrdAsZS8g0WIG5stukU/s700/Poppy%20Playtime%20Chapter%203%20portada.jpg" 
+                         alt="Poppy Playtime: Capítulo 3" 
+                         class="game-img">
+                    <div class="game-info">
+                        <h3 class="game-title">Poppy Playtime: Capítulo 3</h3>
+                        <p class="game-category">Terror / Supervivencia / Aventura / Puzles</p>
+                        <button class="download-btn" onclick="toggleDownloadOptions('PoppyPlaytime3')">Descargar</button>
+
+                        <!-- Opciones de descarga -->
+                        <div class="download-options" id="PoppyPlaytime3-options">
+                            <a href="https://www.mediafire.com/file/ksnvrnrvv98xx1e/POPLYTIME_CH3www.randrogames.com.part1.rar/file"
+                                class="download-option"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                Parte 1 <small>(9.9 GB - MediaFire)</small>
+                            </a>
+                            <a href="https://www.mediafire.com/file/9b53rzttq2mtz8e/POPLYTIME_CH3www.randrogames.com.part2.rar/file"
+                                class="download-option"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                Parte 2 <small>(9.9 GB - MediaFire)</small>
+                            </a>
+                            <a href="https://www.mediafire.com/file/8vf03f6izy54tsp/POPLYTIME_CH3www.randrogames.com.part3.rar/file"
+                                class="download-option"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                Parte 3 <small>(9.9 GB - MediaFire)</small>
+                            </a>
+                            <a href="https://www.mediafire.com/file/ynh821ti4rv1u7p/POPLYTIME_CH3www.randrogames.com.part4.rar/file"
+                                class="download-option"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                Parte 4 <small>(6.21 GB - MediaFire)</small>
+                            </a>
+                            <div class="download-note">
+                                * Necesitas las 4 partes para instalar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="copyright">&copy; 2025 Lord Baby Games</p>
+                <!-- Botón Ko-fi -->
+                <a href="https://ko-fi.com/lordbabygames" target="_blank" class="kofi-btn" style="
+                    background-color: #29abe0;
+                    color: white;
+                    padding: 8px 20px;
+                    border-radius: 4px;
+                    text-decoration: none;
+                    margin-top: 15px;
+                    display: inline-block;
+                ">
+                    <img src="https://storage.ko-fi.com/cdn/cup-border.png" width="20" height="20" alt="Ko-fi">
+                    Invítanos un café
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- DMCA Notice -->
+    <div class="dmca-notice" id="dmcaNotice">
+        La página web LordBaby no posee ni aloja ningún juego o archivo en nuestro servidor. 
+        En LordBaby pueden haber enlaces de otras páginas las cuales son administradas por otras personas, 
+        lo cual no somos responsables de ello.
+    </div>
+
+    <script>
+        // Función para mostrar/ocultar opciones de descarga
+        function toggleDownloadOptions(gameId) {
+            // Oculta todos los menús primero
+            document.querySelectorAll('.download-options').forEach(menu => {
+                if(menu.id !== `${gameId}-options`) {
+                    menu.style.display = 'none';
+                }
+            });
+            
+            // Muestra el menú correspondiente
+            const options = document.getElementById(`${gameId}-options`);
+            if (options.style.display === 'block') {
+                options.style.display = 'none';
+            } else {
+                options.style.display = 'block';
+            }
+            
+            // Cierra el menú al hacer clic fuera
+            setTimeout(() => {
+                document.addEventListener('click', closeAllMenus);
+            }, 10);
+        }
+        
+        function closeAllMenus(e) {
+            // Si el clic no fue en un botón de descarga ni en el menú
+            if (!e.target.classList.contains('download-btn') && 
+                !e.target.closest('.download-options')) {
+                document.querySelectorAll('.download-options').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+                document.removeEventListener('click', closeAllMenus);
+            }
+        }
+        
+        // DMCA Notice Toggle
+        document.getElementById('dmcaBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const notice = document.getElementById('dmcaNotice');
+            notice.style.display = notice.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Cerrar DMCA notice al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const notice = document.getElementById('dmcaNotice');
+            const dmcaBtn = document.getElementById('dmcaBtn');
+            
+            if (!notice.contains(e.target) && e.target !== dmcaBtn) {
+                notice.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
